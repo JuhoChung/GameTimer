@@ -1,0 +1,215 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity$PlaceholderFragment" >
+
+    <LinearLayout
+        android:id="@+id/name1_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/comm_btn_invite_daum_normal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dip">
+
+            <TextView
+                android:id="@+id/name1"
+                android:layout_width="100dip"
+                android:layout_height="40dip"
+                android:gravity="center"
+                android:text="@string/name_field"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_daum_pressed" />
+
+            <TextView
+                android:id="@+id/start1"
+                android:layout_width="100dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="30dip"
+                android:gravity="center"
+                android:text="@string/timer_start"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/start_stop_btn"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="5dip">
+
+            <TextView
+                android:id="@+id/timer1"
+                android:layout_width="0dip"
+                android:layout_height="30dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/timer_field"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_kakao_pressed" />
+
+            <TextView
+                android:id="@+id/remaintimer1"
+                android:layout_width="0dip"
+                android:layout_height="30dip"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:text="@string/remain_timer_filed"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_sms_pressed" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/name2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name1_layout"
+        android:layout_marginTop="10dip"
+        android:orientation="vertical"
+        android:background="@drawable/comm_btn_invite_daum_normal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dip">
+
+            <TextView
+                android:id="@+id/name2"
+                android:layout_width="100dip"
+                android:layout_height="40dip"
+                android:gravity="center"
+                android:text="@string/name_field"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_daum_pressed" />
+
+            <TextView
+                android:id="@+id/start2"
+                android:layout_width="100dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="30dip"
+                android:gravity="center"
+                android:text="@string/timer_start"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/start_stop_btn"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="5dip">
+
+            <TextView
+                android:id="@+id/timer2"
+                android:layout_width="0dip"
+                android:layout_height="30dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/timer_field"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_kakao_pressed" />
+
+            <TextView
+                android:id="@+id/remaintimer2"
+                android:layout_width="0dip"
+                android:layout_height="30dip"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:text="@string/remain_timer_filed"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_sms_pressed" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/name3_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name2_layout"
+        android:layout_marginTop="10dip"
+        android:orientation="vertical"
+        android:background="@drawable/comm_btn_invite_daum_normal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dip">
+
+            <TextView
+                android:id="@+id/name3"
+                android:layout_width="100dip"
+                android:layout_height="40dip"
+                android:gravity="center"
+                android:text="@string/name_field"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_daum_pressed" />
+
+            <TextView
+                android:id="@+id/start3"
+                android:layout_width="100dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="30dip"
+                android:gravity="center"
+                android:text="@string/timer_start"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/start_stop_btn"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="5dip">
+
+            <TextView
+                android:id="@+id/timer3"
+                android:layout_width="0dip"
+                android:layout_height="30dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/timer_field"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_kakao_pressed" />
+
+            <TextView
+                android:id="@+id/remaintimer3"
+                android:layout_width="0dip"
+                android:layout_height="30dip"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:text="@string/remain_timer_filed"
+                android:textSize="15dip"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/comm_btn_invite_sms_pressed" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
