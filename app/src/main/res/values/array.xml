@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting_name_spinner_list">
+        <item>@string/name1_default</item>
+        <item>@string/name2_default</item>
+        <item>@string/name3_default</item>
+    </string-array>
+</resources>

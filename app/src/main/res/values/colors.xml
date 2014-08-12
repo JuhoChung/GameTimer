@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="lightgray">#FFE9E9E9</color>
+    <color name="actionbar_background">#FFFCC3C3</color>
+    <color name="actionbar_tab_not_select">#FFFB9B9B</color>
+    <color name="actionbar_tab_select">#FFFC7979</color>
+    <color name="actionbar_tab_pressed">#FFFB6D6D</color>
+    <color name="log_text_background">#FFF3C5FF</color>
+</resources>

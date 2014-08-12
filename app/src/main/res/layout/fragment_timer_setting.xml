@@ -1,0 +1,176 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity$TimerSettingFragment" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        android:fadingEdge="none"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/timer_setting_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/name_setting_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/comm_btn_invite_kakao_normal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="2dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:background="@drawable/comm_btn_invite_daum_pressed"
+                    android:textSize="18dip"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="@string/setting_name_title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <Spinner
+                        android:id="@+id/name_setting_spinner"
+                        android:layout_width="80dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip" />
+
+                    <EditText
+                        android:id="@+id/name_input"
+                        android:layout_width="0dip"
+                        android:layout_height="40dip"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dip"
+                        android:gravity="center_vertical"
+                        android:textSize="18dip"
+                        android:textColor="@color/black"
+                        android:singleLine="true"
+                        android:maxLength="30"
+                        android:ellipsize="end" />
+
+                    <Button
+                        android:id="@+id/input_confirm_btn"
+                        android:layout_width="50dip"
+                        android:layout_height="40dip"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dip"
+                        android:background="@drawable/input_confirm_btn"
+                        android:text="@string/input_confirm"
+                        android:textColor="@drawable/input_confirm_btn_text_color"
+                        android:textSize="17dip"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/timer_setting_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:background="@drawable/comm_btn_invite_kakao_normal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="2dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:background="@drawable/comm_btn_invite_daum_pressed"
+                    android:textSize="18dip"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="@string/setting_timer_title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <Spinner
+                        android:id="@+id/timer_setting_spinner"
+                        android:layout_width="80dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip" />
+
+                    <NumberPicker
+                        android:id="@+id/timer_setting_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dip" />
+
+                    <NumberPicker
+                        android:id="@+id/timer_setting_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"/>
+
+                    <View
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/timer_confirm_btn"
+                        android:layout_width="50dip"
+                        android:layout_height="40dip"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dip"
+                        android:background="@drawable/input_confirm_btn"
+                        android:text="@string/input_confirm"
+                        android:textColor="@drawable/input_confirm_btn_text_color"
+                        android:textSize="17dip"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/reset_timer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dip"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/reset_timer"
+                    android:layout_width="150dip"
+                    android:layout_height="40dip"
+                    android:gravity="center"
+                    android:text="@string/reset_timer"
+                    android:textSize="15dip"
+                    android:textColor="@color/white"
+                    android:background="@drawable/start_btn" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

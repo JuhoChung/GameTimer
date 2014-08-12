@@ -2,16 +2,16 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Alex\AndroidStudioProjects\GameTimer\app\build\intermediates\pre-dexed\debug\classes-5259874824aff1fb3e94a758617aefd26e706a1d.jar"
-        jar="C:\Users\Alex\AndroidStudioProjects\GameTimer\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
-    <item
-        dex="C:\Users\Alex\AndroidStudioProjects\GameTimer\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-e311e493b238b75da4095bd5ee7b69d76d73dc42.jar"
+        dex="C:\Users\정주호\AndroidStudioProjects\GameTimer\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-e311e493b238b75da4095bd5ee7b69d76d73dc42.jar"
         jar="C:\Program Files (x86)\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="C:\Users\정주호\AndroidStudioProjects\GameTimer\app\build\intermediates\pre-dexed\debug\classes-99cac2fc916ec94e73a57a347a123a10c06b99f2.jar"
+        jar="C:\Users\정주호\AndroidStudioProjects\GameTimer\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
 
 </pre-dex-items>
