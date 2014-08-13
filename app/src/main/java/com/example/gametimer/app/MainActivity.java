@@ -2,6 +2,7 @@ package com.example.gametimer.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -49,6 +50,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,7 +67,9 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -137,7 +141,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private SMSControlTimer mSmsControlTimer;
 
-    // Bitmap Cache
+    // Bitmap Memory Cache From Google LruCache
     private static LruCache<String, Bitmap> mMemoryCache;
 
     @Override
@@ -1259,7 +1263,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         private Dialog mLoadLogSelect;
         private CharSequence[] mLoadLogItems;
         private boolean[] mLoadLogItemsStates;
-        private Button mDBLoadBtn;
         private TextView mLogView;
         private TableLayout mLogTable;
 
@@ -1314,13 +1317,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             mPhotoSaveBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( isValidTimerIndex(mPhotoIndex) ) {
+                    if (isValidTimerIndex(mPhotoIndex)) {
                         Drawable photo = mPhoto.getDrawable();
-                        Bitmap phtoBitmap = ((BitmapDrawable)photo).getBitmap();
+                        Bitmap phtoBitmap = ((BitmapDrawable) photo).getBitmap();
 
                         String fileDirectory = Environment.getExternalStorageDirectory().getPath() + DIRECTORY_NAME;
                         File directory = new File(fileDirectory);
-                        if( directory != null && directory.exists() == false ) {
+                        if (directory != null && directory.exists() == false) {
                             directory.mkdirs();
                         }
 
@@ -1344,7 +1347,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             mPhotoSaveBtn.setEnabled(false);
                             mPhotoDeleteBtn.setEnabled(true);
                         } catch (Exception e) {
-                            Log.d("GameTimer", "mPhotoSaveBtn Save FileOutputStream Error: " + e.getMessage() );
+                            Log.d("GameTimer", "mPhotoSaveBtn Save FileOutputStream Error: " + e.getMessage());
                             e.printStackTrace();
                         }
                     }
@@ -1358,13 +1361,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 public void onClick(View v) {
                     String fileDirectory = Environment.getExternalStorageDirectory().getPath() + DIRECTORY_NAME;
                     File directory = new File(fileDirectory);
-                    if( directory.exists() ) {
+                    if (directory.exists()) {
                         String filePath = fileDirectory + PROFILE_PHOTO_FILE_NAME[mPhotoIndex];
 
                         File targetFile = new File(filePath);
-                        if( targetFile.exists() ) {
-                            if( targetFile.delete() ) {
-                                Log.d("GameTimer", "mPhotoDeleteBtn Delete Photo : " + PROFILE_PHOTO_FILE_NAME[mPhotoIndex] );
+                        if (targetFile.exists()) {
+                            if (targetFile.delete()) {
+                                Log.d("GameTimer", "mPhotoDeleteBtn Delete Photo : " + PROFILE_PHOTO_FILE_NAME[mPhotoIndex]);
                                 mPhotoDeleteBtn.setEnabled(false);
                                 clearBitmapFromMemCache(PROFILE_PHOTO_FILE_NAME[mPhotoIndex]);
                                 mPhoto.setImageResource(R.drawable.photo_add);  // 사진을 지운 경우 Default 이미지를 설정해줌
@@ -1386,14 +1389,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             mPhotoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if( isValidTimerIndex(position) ) {
+                    if (isValidTimerIndex(position)) {
                         mPhotoIndex = position;
                         mPhotoSaveBtn.setEnabled(false);
 
                         BitmapLoadTask task = new BitmapLoadTask();
                         task.execute(mPhotoIndex);
                     } else {
-                        Log.d("GameTimer", "mPhotoSpinner : Invalid Timer Index[" + String.valueOf(position) + "]" );
+                        Log.d("GameTimer", "mPhotoSpinner : Invalid Timer Index[" + String.valueOf(position) + "]");
                     }
                 }
 
@@ -1416,9 +1419,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
             });
 
+            //mLogView = (TextView) rootView.findViewById(R.id.log_text);
+            mLogTable = (TableLayout) rootView.findViewById(R.id.log_table);
+
             mLoadLogItems = new CharSequence[TIMER_INDEX.length];
             mLoadLogItemsStates = new boolean[TIMER_INDEX.length];
-            for( int i = 0; i < TIMER_INDEX.length; i++ ) {
+            for (int i = 0; i < TIMER_INDEX.length; i++) {
                 mLoadLogItems[i] = mTimerName[i];
                 mLoadLogItemsStates[i] = true;
             }
@@ -1428,7 +1434,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             loadLogSelectBuilder.setMultiChoiceItems(mLoadLogItems, mLoadLogItemsStates, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                    Log.d("GameTimer", "loadLogSelect[" + mLoadLogItems[which] + "]-" + isChecked );
+                    Log.d("GameTimer", "loadLogSelectByName[" + mLoadLogItems[which] + "]-" + isChecked);
                 }
             });
 
@@ -1437,14 +1443,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 public void onClick(DialogInterface dialog, int which) {
                     boolean noSelectFlag = true;
                     int index = 0;
-                    for(boolean state : mLoadLogItemsStates) {
-                        Log.d("GameTimer", "loadLogSelect Confirm[" + mLoadLogItems[index++] + "]-" + state );
+                    for (boolean state : mLoadLogItemsStates) {
+                        Log.d("GameTimer", "loadLogSelectByName Confirm[" + mLoadLogItems[index++] + "]-" + state);
 
-                        if( state )
+                        if (state)
                             noSelectFlag = false;
                     }
 
-                    if( noSelectFlag ) {
+                    if (noSelectFlag) {
                         Toast.makeText(mContext, getString(R.string.load_log_select_by_index_error_msg), Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -1453,40 +1459,48 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                         Cursor cursor = mDBAdapter.fetchLogByTimerIndex(mLoadLogItemsStates);
                         showLog(cursor);
                     } catch (SQLException e) {
-                        Log.d("GameTimer", "mDBLoadBtn DB Error: " + e.getMessage() );
+                        Log.d("GameTimer", "loadLogSelectByName DB Error: " + e.getMessage());
                         e.printStackTrace();
                     }
                 }
             });
             mLoadLogSelect = loadLogSelectBuilder.create();
 
-            final View loadLogSelect = rootView.findViewById(R.id.load_log_select_btn);
-            loadLogSelect.setOnClickListener(new View.OnClickListener() {
+            final View loadLogSelectByName = rootView.findViewById(R.id.load_log_select_by_name_btn);
+            loadLogSelectByName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mLoadLogSelect.show();
                 }
             });
 
-            //mLogView = (TextView) rootView.findViewById(R.id.log_text);
-            mLogTable = (TableLayout) rootView.findViewById(R.id.log_table);
-            mDBLoadBtn = (Button) rootView.findViewById(R.id.load_log_btn);
-            mDBLoadBtn.setOnClickListener(new View.OnClickListener() {
+            final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
                 @Override
-                public void onClick(View v) {
-                    int index = 0;
-                    for(boolean state : mLoadLogItemsStates) {
-                        Log.d("GameTimer", "mDBLoadBtn[" + mLoadLogItems[index++] + "]-" + state );
-                    }
-
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     try {
-                        Cursor cursor = mDBAdapter.fetchAllLogs();
-                        //Cursor cursor = mDBAdapter.fetchLogByTimerIndex(mLoadLogItemsStates);
+                        String date = null;
+                        Cursor cursor = mDBAdapter.fetchLogByDate(date);
+
                         showLog(cursor);
                     } catch (SQLException e) {
-                        Log.d("GameTimer", "mDBLoadBtn DB Error: " + e.getMessage() );
+                        Log.d("GameTimer", "loadLogSelectByDate DB Error: " + e.getMessage() );
                         e.printStackTrace();
                     }
+                }
+            };
+
+            final View loadLogSelectByDate = rootView.findViewById(R.id.load_log_select_by_date_btn);
+            loadLogSelectByDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    int year, month, day;
+
+                    year = calendar.get(Calendar.YEAR);
+                    month = calendar.get(Calendar.MONTH);
+                    day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    new DatePickerDialog(mContext, dateSetListener, year, month, day).show();
                 }
             });
 

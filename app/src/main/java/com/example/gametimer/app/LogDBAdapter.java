@@ -129,7 +129,7 @@ public class LogDBAdapter {
 
     public Cursor fetchLogByTimerIndex(boolean[] timerIndexStates) throws SQLException {
         int index = 0;
-        for(boolean state : timerIndexStates) {
+        for( boolean state : timerIndexStates ) {
             Log.d("GameTimer DB", "fetchLog called TimerIndex[" + (index++) + "]-" + state );
         }
 
@@ -158,9 +158,34 @@ public class LogDBAdapter {
                                   null,
                                   null);
 
-        if( cursor != null ) {
+        if( cursor != null )
             cursor.moveToFirst();
+
+        return cursor;
+    }
+
+    public Cursor fetchLogByDate(String date) throws  SQLException {
+        Log.d("GameTimer DB", "fetchLogByDate : " + date);
+
+        if( mDB == null ) {
+            Log.d("GameTimer DB", "fetchLogByDate Error : DB is null");
+
+            return null;
         }
+
+        String where = KEY_DATE + "=" + date;
+
+        Cursor cursor = mDB.query(true, DATABASE_TABLE,
+                ALL_COLUMS,
+                where,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if( cursor != null )
+            cursor.moveToFirst();
 
         return cursor;
     }

@@ -121,7 +121,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/load_log_select_btn"
+                    android:id="@+id/load_log_select_by_name_btn"
                     android:layout_width="80dip"
                     android:layout_height="40dip"
                     android:background="@drawable/input_confirm_btn"
@@ -131,12 +131,12 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/load_log_btn"
+                    android:id="@+id/load_log_select_by_date_btn"
                     android:layout_width="80dip"
                     android:layout_height="40dip"
                     android:layout_marginLeft="5dip"
                     android:background="@drawable/input_confirm_btn"
-                    android:text="@string/load_log"
+                    android:text="@string/load_log_select_by_date"
                     android:textColor="@drawable/input_confirm_btn_text_color"
                     android:textSize="17dip"
                     android:textStyle="bold" />
@@ -210,8 +210,5 @@
                 android:background="@drawable/stop_btn" />
         </LinearLayout>
     </LinearLayout>
-
-
-
 
 </RelativeLayout>
