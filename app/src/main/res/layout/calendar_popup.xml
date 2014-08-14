@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/calendar_popup_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/calendar_popup_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:background="@drawable/chat_btn_basic_normal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dip"
+            android:layout_gravity="center"
+            android:background="@color/calendar_popup_title_background"
+            android:text="@string/load_log_by_date_title"
+            android:textSize="20dip"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <CalendarView
+            android:id="@+id/calendar_view"
+            android:layout_width="@dimen/calendar_popup_width"
+            android:layout_height="@dimen/calendar_popup_height"
+            android:layout_marginTop="10dip"
+            android:clickable="true"
+            android:showWeekNumber="true"
+            android:background="@color/calendar_background"
+            android:selectedWeekBackgroundColor="@color/calendar_selected_week_background">
+        </CalendarView>
+
+        <LinearLayout
+            android:layout_width="@dimen/calendar_popup_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/prev_month_btn"
+                android:layout_width="0dip"
+                android:layout_height="50dip"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/prev_next_btn">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/comm_ico_arr_myball_prev"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:text="@string/calendar_prev_month_btn"
+                    android:textSize="17dip"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/confirm_btn"
+                android:layout_width="0dip"
+                android:layout_height="50dip"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                android:background="@drawable/stop_btn"
+                android:text="@string/confirm"
+                android:textSize="17dip"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/next_month_btn"
+                android:layout_width="0dip"
+                android:layout_height="50dip"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dip"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/prev_next_btn">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calendar_next_month_btn"
+                    android:textSize="17dip"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:src="@drawable/comm_ico_arr_myball_next"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

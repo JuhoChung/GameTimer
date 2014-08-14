@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dip</dimen>
 
     <dimen name="photo_size">100dip</dimen>
+
+    <dimen name="calendar_popup_width">300dip</dimen>
+    <dimen name="calendar_popup_height">300dip</dimen>
 </resources>

@@ -50,11 +50,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -1430,7 +1432,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }
 
             AlertDialog.Builder loadLogSelectBuilder = new AlertDialog.Builder(mContext);
-            loadLogSelectBuilder.setTitle(R.string.load_log_by_index);
+            loadLogSelectBuilder.setTitle(R.string.load_log_by_index_title);
             loadLogSelectBuilder.setMultiChoiceItems(mLoadLogItems, mLoadLogItemsStates, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -1474,33 +1476,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
             });
 
-            final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    try {
-                        String date = null;
-                        Cursor cursor = mDBAdapter.fetchLogByDate(date);
-
-                        showLog(cursor);
-                    } catch (SQLException e) {
-                        Log.d("GameTimer", "loadLogSelectByDate DB Error: " + e.getMessage() );
-                        e.printStackTrace();
-                    }
-                }
-            };
-
             final View loadLogSelectByDate = rootView.findViewById(R.id.load_log_select_by_date_btn);
             loadLogSelectByDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GregorianCalendar calendar = new GregorianCalendar();
-                    int year, month, day;
-
-                    year = calendar.get(Calendar.YEAR);
-                    month = calendar.get(Calendar.MONTH);
-                    day = calendar.get(Calendar.DAY_OF_MONTH);
-
-                    new DatePickerDialog(mContext, dateSetListener, year, month, day).show();
+                    showCalendarPopup(mContext);
                 }
             });
 
@@ -1545,6 +1525,111 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     setPictureBG(pictureUri);
                 }
             }
+        }
+
+        private void showCalendarPopup(Activity context) {
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View calendarLayout = layoutInflater.inflate(R.layout.calendar_popup, null, false);
+
+            final PopupWindow popupWindow = new PopupWindow(calendarLayout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            popupWindow.setContentView(calendarLayout);
+            popupWindow.setOutsideTouchable(false);
+
+            final CalendarView calendarView = (CalendarView) calendarLayout.findViewById(R.id.calendar_view);
+
+            View prevMonthButton = calendarLayout.findViewById(R.id.prev_month_btn);
+            prevMonthButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    long currMilliTime = calendarView.getDate();
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(currMilliTime);
+
+                    int currYear = calendar.get(Calendar.YEAR);
+                    int currMonth = calendar.get(Calendar.MONTH) + 1;   // Month는 0 ~ 11이므로 1을 더해준다
+                    int currDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    if( currMonth == 1 ) {
+                        currYear--;
+                        currMonth = 12;
+                    } else {
+                        currMonth--;
+                    }
+
+                    Log.d("GameTimer", "showCalendarPopup : prevMonthButton(" + currYear + "/" + currMonth + "/" + currDay + ")");
+
+                    calendar.set(Calendar.YEAR, currYear);
+                    calendar.set(Calendar.MONTH, currMonth - 1);    // Month는 0 ~ 11이므로 설정해줄때는 1을 빼준다
+                    calendar.set(Calendar.DAY_OF_MONTH, currDay);
+
+                    long setMilliTime = calendar.getTimeInMillis();
+
+                    calendarView.setDate(setMilliTime, true, true);
+                }
+            });
+
+            View nextMonthButton = calendarLayout.findViewById(R.id.next_month_btn);
+            nextMonthButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    long currMilliTime = calendarView.getDate();
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(currMilliTime);
+
+                    int currYear = calendar.get(Calendar.YEAR);
+                    int currMonth = calendar.get(Calendar.MONTH) + 1;   // Month는 0 ~ 11이므로 읽어들일때는 1을 더해준다
+                    int currDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    if( currMonth == 12 ) {
+                        currYear++;
+                        currMonth = 1;
+                    } else {
+                        currMonth++;
+                    }
+
+                    Log.d("GameTimer", "showCalendarPopup : nextMonthButton(" + currYear + "/" + currMonth + "/" + currDay + ")");
+
+                    calendar.set(Calendar.YEAR, currYear);
+                    calendar.set(Calendar.MONTH, currMonth - 1);    // Month는 0 ~ 11이므로 설정해줄때는 1을 빼준다
+                    calendar.set(Calendar.DAY_OF_MONTH, currDay);
+
+                    long setMilliTime = calendar.getTimeInMillis();
+
+                    calendarView.setDate(setMilliTime, true, true);
+                }
+            });
+
+            View confirmButton = calendarLayout.findViewById(R.id.confirm_btn);
+            confirmButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow.dismiss();
+
+                    long currMilliTime = calendarView.getDate();
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(currMilliTime);
+
+                    int currYear = calendar.get(Calendar.YEAR);
+                    int currMonth = calendar.get(Calendar.MONTH) + 1;   // Month는 0 ~ 11이므로 1을 더해준다
+                    int currDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    try {
+                        Log.d("GameTimer", "showCalendarPopup : confirmButton(" + currYear + "/" + currMonth + "/" + currDay + ")");
+                        String date = null;
+                        Cursor cursor = mDBAdapter.fetchLogByDate(date);
+
+                        showLog(cursor);
+                    } catch (SQLException e) {
+                        Log.d("GameTimer", "loadLogSelectByDate DB Error: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            popupWindow.showAtLocation(calendarLayout, Gravity.TOP, 0, 0);
         }
 
         private void showLog(Cursor cursor) {
