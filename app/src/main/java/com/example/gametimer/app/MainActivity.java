@@ -1618,7 +1618,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
                     try {
                         Log.d("GameTimer", "showCalendarPopup : confirmButton(" + currYear + "/" + currMonth + "/" + currDay + ")");
-                        String date = null;
+                        String date = convertTimeToDate(currMilliTime, simpleDateFormat);
                         Cursor cursor = mDBAdapter.fetchLogByDate(date);
 
                         showLog(cursor);
@@ -1626,6 +1626,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                         Log.d("GameTimer", "loadLogSelectByDate DB Error: " + e.getMessage());
                         e.printStackTrace();
                     }
+                }
+            });
+
+            View closeButton = calendarLayout.findViewById(R.id.clost_btn);
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow.dismiss();
                 }
             });
 
@@ -1666,8 +1674,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
                 //mLogView.setText(logItems);
             } else {
+                Log.d("GameTimer", "showLog No Content");
                 //mLogView.setText(getString(R.string.load_log_empty_msg));
-                mLogTable.removeAllViewsInLayout();
+                //mLogTable.removeAllViewsInLayout();
+                mLogTable.removeAllViews();
             }
         }
 

@@ -173,7 +173,7 @@ public class LogDBAdapter {
             return null;
         }
 
-        String where = KEY_DATE + "=" + date;
+        String where = KEY_DATE + "=" + "'" + date + "'";
 
         Cursor cursor = mDB.query(true, DATABASE_TABLE,
                 ALL_COLUMS,

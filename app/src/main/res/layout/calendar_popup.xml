@@ -14,16 +14,29 @@
         android:background="@drawable/chat_btn_basic_normal"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dip"
-            android:layout_gravity="center"
-            android:background="@color/calendar_popup_title_background"
-            android:text="@string/load_log_by_date_title"
-            android:textSize="20dip"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dip"
+                android:layout_gravity="center"
+                android:background="@color/calendar_popup_title_background"
+                android:text="@string/load_log_by_date_title"
+                android:textSize="20dip"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/clost_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/close_btn"/>
+
+        </FrameLayout>>
 
         <CalendarView
             android:id="@+id/calendar_view"
