@@ -1265,7 +1265,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         private Dialog mLoadLogSelect;
         private CharSequence[] mLoadLogItems;
         private boolean[] mLoadLogItemsStates;
-        private TextView mLogView;
+        private TextView mLogEmptyView;
         private TableLayout mLogTable;
 
         @Override
@@ -1421,7 +1421,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
             });
 
-            //mLogView = (TextView) rootView.findViewById(R.id.log_text);
+            mLogEmptyView = (TextView) rootView.findViewById(R.id.log_text);
             mLogTable = (TableLayout) rootView.findViewById(R.id.log_table);
 
             mLoadLogItems = new CharSequence[TIMER_INDEX.length];
@@ -1646,6 +1646,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 int timerIndex;
                 String timerName, date, startTime, stopTime;
 
+                mLogEmptyView.setVisibility(View.GONE);
+                mLogTable.setVisibility(View.VISIBLE);
                 mLogTable.removeAllViewsInLayout();
 
                 while (!cursor.isAfterLast()) {
@@ -1675,9 +1677,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 //mLogView.setText(logItems);
             } else {
                 Log.d("GameTimer", "showLog No Content");
-                //mLogView.setText(getString(R.string.load_log_empty_msg));
-                //mLogTable.removeAllViewsInLayout();
                 mLogTable.removeAllViews();
+                mLogEmptyView.setVisibility(View.VISIBLE);
+                mLogTable.setVisibility(View.GONE);
             }
         }
 
@@ -1873,6 +1875,79 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         return null;
+    }
+
+    public static String getDiffDate(String date, int diffDay, boolean nextDay) {
+        DateFormat inputFormat = new SimpleDateFormat(simpleDateFormat);
+        int newDiffDay, maxDayOfMonth;
+        long newDiffMilliTime;
+        String diffDate;
+
+        try {
+            Date currTime = inputFormat.parse(date);
+            long currMilliTime = currTime.getTime();
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(currMilliTime);
+
+            int currYear = calendar.get(Calendar.YEAR);
+            int currMonth = calendar.get(Calendar.MONTH);
+            int currDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+            if( nextDay ) {     // 이후 날짜
+                maxDayOfMonth = getMaxdayOfMonth(currYear, currMonth, currDay);
+
+                if( (currDay + diffDay) > maxDayOfMonth ) {     // 다음 달로 넘어가는 경우
+                    if( currMonth + 1 > Calendar.DECEMBER ) {   // 다음 해로 넘어가는 경우
+                        currYear++;
+                        currMonth = Calendar.JANUARY;
+                    } else {
+                        currMonth++;
+                    }
+
+                    currDay = diffDay - (maxDayOfMonth - currDay);
+                } else {
+                    currDay += diffDay;
+                }
+            } else {            // 이전 날짜
+                if( (currDay - diffDay) <= 0 ) {                // 이전 달로 넘어가는 경우
+                    if( (currMonth - 1) < Calendar.JANUARY ) {  // 이전 해로 넘어 가는 경우
+                        currYear--;
+                        currMonth = Calendar.DECEMBER;
+                    } else {
+                        currMonth--;
+                    }
+
+                    newDiffDay = diffDay - (currDay - 1);
+                    maxDayOfMonth = getMaxdayOfMonth(currYear, currMonth, currDay);
+
+                    currDay = maxDayOfMonth - (newDiffDay - 1);
+                } else {
+                    currDay -= diffDay;
+                }
+            }
+
+            calendar.set(Calendar.YEAR, currYear);
+            calendar.set(Calendar.MONTH, currMonth);
+            calendar.set(Calendar.DAY_OF_MONTH, currDay);
+
+            newDiffMilliTime = calendar.getTimeInMillis();
+
+            diffDate = convertTimeToDate(newDiffMilliTime, simpleDateFormat);
+
+            return diffDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static int getMaxdayOfMonth(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     public static int getTimerNumber() {

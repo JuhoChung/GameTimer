@@ -173,7 +173,11 @@ public class LogDBAdapter {
             return null;
         }
 
-        String where = KEY_DATE + "=" + "'" + date + "'";
+        String prevDate = MainActivity.getDiffDate(date, 7, false);
+        String nextDate = MainActivity.getDiffDate(date, 7, true);
+
+        //String where = KEY_DATE + "=" + "'" + date + "'";
+        String where = KEY_DATE + ">" + "'" + prevDate + "'" + " AND " + KEY_DATE + "<" + "'" + nextDate + "'";
 
         Cursor cursor = mDB.query(true, DATABASE_TABLE,
                 ALL_COLUMS,

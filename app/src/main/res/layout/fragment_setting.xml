@@ -166,26 +166,30 @@
                 android:fadingEdge="none"
                 android:fillViewport="true">
 
-               <!--
-               <TextView
-                    android:id="@+id/log_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="5dip"
-                    android:textColor="@color/black"
-                    android:textSize="13dip"
-                    android:hint="@string/log_data_hit_msg"/>
-                -->
+               <FrameLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent">
 
-                <TableLayout
-                    android:id="@+id/log_table"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="3dip"
-                    android:layout_marginRight="3dip"
-                    android:stretchColumns="*"
-                    android:textColor="@color/black"
-                    android:textSize="13dip" />
+                   <TextView
+                        android:id="@+id/log_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dip"
+                        android:textColor="@color/black"
+                        android:textSize="13dip"
+                        android:text="@string/log_data_empty_msg"
+                        android:visibility="gone" />
+
+                    <TableLayout
+                        android:id="@+id/log_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="3dip"
+                        android:layout_marginRight="3dip"
+                        android:stretchColumns="*"
+                        android:textColor="@color/black"
+                        android:textSize="13dip" />
+               </FrameLayout>
             </ScrollView>
         </LinearLayout>
 

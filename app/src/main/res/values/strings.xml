@@ -62,5 +62,5 @@
 
     <string name="setting_photo_title">사진을 변경하세요</string>
     <string name="setting_photo_save_msg">사진이 저장되었습니다</string>
-    <string name="log_data_hit_msg">로그가 표시됩니다.</string>
+    <string name="log_data_empty_msg">해당 로그가 없습니다</string>
 </resources>
