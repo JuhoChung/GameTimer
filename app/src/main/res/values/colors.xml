@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
-    <color name="black">#FF000000</color>
-    <color name="blue">#FF0000FF</color>
-    <color name="lightgray">#FFE9E9E9</color>
-    <color name="actionbar_background">#FFFCC3C3</color>
-    <color name="actionbar_tab_not_select">#FFFB9B9B</color>
-    <color name="actionbar_tab_select">#FFFC7979</color>
-    <color name="actionbar_tab_pressed">#FFFB6D6D</color>
-    <color name="log_text_background">#FFF3C5FF</color>
-    <color name="calendar_popup_title_background">#FF97A3FF</color>
-    <color name="calendar_popup_background">#CCC4C4C4</color>
-    <color name="calendar_background">#FFF2EBFF</color>
-    <color name="calendar_selected_week_background">#FFB386FF</color>
-    <color name="calendar_prev_next_btn_pressed_background">#FFE9FFE9</color>
+<color name="white">#FFFFFFFF</color>
+<color name="black">#FF000000</color>
+<color name="blue">#FF0000FF</color>
+<color name="lightgray">#FFE9E9E9</color>
+<color name="actionbar_background">#FFFCC3C3</color>
+<color name="actionbar_tab_not_select">#FFFB9B9B</color>
+<color name="actionbar_tab_select">#FFFC7979</color>
+<color name="actionbar_tab_pressed">#FFFB6D6D</color>
+<color name="log_text_background">#FFF3C5FF</color>
+<color name="calendar_popup_title_background">#FF97A3FF</color>
+<color name="calendar_popup_background">#CCC4C4C4</color>
+<color name="calendar_background">#FFF2EBFF</color>
+<color name="calendar_selected_week_background">#FFB386FF</color>
+<color name="calendar_prev_next_btn_pressed_background">#FFE9FFE9</color>
 </resources>

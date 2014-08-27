@@ -63,6 +63,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
@@ -1267,6 +1271,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         private boolean[] mLoadLogItemsStates;
         private TextView mLogEmptyView;
         private TableLayout mLogTable;
+        private LinearLayout mLogGraph;
+
+        private enum LOG_TYPE { EMPTY, TABLE, GRAPH };
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -1484,7 +1491,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
             });
 
-            View deleteAllLog = rootView.findViewById(R.id.delete_all_log_btn);
+            final View loadLogGraph = rootView.findViewById(R.id.load_log_graph_btn);
+            loadLogGraph.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showLogGraph();
+                }
+            });
+
+            final View deleteAllLog = rootView.findViewById(R.id.delete_all_log_btn);
             deleteAllLog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1500,6 +1515,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             mDBAdapter.deleteAllLog();
                             //mLogView.setText("");
                             mLogTable.removeAllViewsInLayout();
+                            showLogView(LOG_TYPE.EMPTY);
                         }
                     });
 
@@ -1513,6 +1529,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
             });
 
+            mLogGraph = (LinearLayout) rootView.findViewById(R.id.log_graph);
         }
 
         @Override
@@ -1646,8 +1663,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 int timerIndex;
                 String timerName, date, startTime, stopTime;
 
-                mLogEmptyView.setVisibility(View.GONE);
-                mLogTable.setVisibility(View.VISIBLE);
+                showLogView(LOG_TYPE.TABLE);
                 mLogTable.removeAllViewsInLayout();
 
                 while (!cursor.isAfterLast()) {
@@ -1678,8 +1694,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             } else {
                 Log.d("GameTimer", "showLog No Content");
                 mLogTable.removeAllViews();
-                mLogEmptyView.setVisibility(View.VISIBLE);
-                mLogTable.setVisibility(View.GONE);
+                showLogView(LOG_TYPE.EMPTY);
             }
         }
 
@@ -1692,6 +1707,35 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             textIndex.setBackgroundColor(getResources().getColor(R.color.log_text_background));
 
             logRow.addView(textIndex, new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+
+        private void showLogGraph() {
+            GraphViewSeries exampleSeries = new GraphViewSeries(new GraphView.GraphViewData[] {
+                    new GraphView.GraphViewData(1, 2.0d)
+                    , new GraphView.GraphViewData(2, 1.5d)
+                    , new GraphView.GraphViewData(3, 2.5d)
+                    , new GraphView.GraphViewData(4, 1.0d)
+            });
+
+            GraphView graphView = new LineGraphView(mContext, "GraphViewDemo");
+            graphView.addSeries(exampleSeries);
+
+            mLogGraph.addView(graphView);
+            showLogView(LOG_TYPE.GRAPH);
+        }
+
+        private void showLogView(LOG_TYPE type) {
+            mLogEmptyView.setVisibility(View.GONE);
+            mLogTable.setVisibility(View.GONE);
+            mLogGraph.setVisibility(View.GONE);
+
+            if( type == LOG_TYPE.EMPTY ) {
+                mLogEmptyView.setVisibility(View.VISIBLE);
+            } else if( type == LOG_TYPE.TABLE ) {
+                mLogTable.setVisibility(View.VISIBLE);
+            } else if( type == LOG_TYPE.GRAPH ) {
+                mLogGraph.setVisibility(View.VISIBLE);
+            }
         }
 
         private void setPictureBG(Uri pictureUri) {
