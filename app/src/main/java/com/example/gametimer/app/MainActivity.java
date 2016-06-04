@@ -2,7 +2,6 @@ package com.example.gametimer.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -19,21 +18,28 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.util.LruCache;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -44,14 +50,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Handler;
-import android.os.Message;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -73,13 +76,17 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity {
     // Preference Key
     private static final String[] PREFERENCE_KEY_NAME = { "timer1_name", "timer2_name", "timer3_name" };
     private static final String[] PREFERENCE_KEY_TIMER_TIMEOUT = { "timer1_timeout", "timer2_timeout", "timer3_timeout" };
@@ -119,9 +126,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private static boolean isTimerDataRecovery = false;
 
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
     private static ViewPager mViewPager;
     private static TabsPagerAdapter mPagerAdapter;
-    private ActionBar mActionBar;
+
+    private CoordinatorLayout coordinatorLayout;
 
     private static SharedPreferences mSharedPreferences;
     private static Timer[] mGameTimer;
@@ -189,43 +199,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             e.printStackTrace();
         }
 
-        mViewPager = (ViewPager) findViewById(R.id.main_pager);
-        mPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.container);
 
-        mViewPager.setAdapter(mPagerAdapter);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mViewPager = (ViewPager) findViewById(R.id.main_pager);
+        setupViewPager(mViewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+        setupTabIcons();
 
         // Timer 관련 정보 초기화 및 복원
         initTimerName();
         initTimerData();
         initTimerStatus();
         isTimerDataRecovery = true;
-
-        setupTabs();
-        //if (savedInstanceState == null) {
-        //    getSupportFragmentManager().beginTransaction()
-        //            .add(R.id.container, new PlaceholderFragment())
-        //            .commit();
-        //}
-
-        /**
-         * On Swiping The ViewPager Make Respective Tab Selected
-         */
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mActionBar.setSelectedNavigationItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override
@@ -296,52 +287,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         Toast.makeText(this, getString(R.string.back_press_ignore_msg), Toast.LENGTH_SHORT).show();
     }
 
-    private void setupTabs() {
-        mActionBar = getSupportActionBar();
-        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        mActionBar.setDisplayShowTitleEnabled(true);
+    private void setupViewPager(ViewPager viewPager) {
+        mPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        MainTimerFragment fragment = new MainTimerFragment();
+        fragment.setCoordinatorLayout(coordinatorLayout);
+        try {
+            mSmsControlTimer = (SMSControlTimer) fragment;
+        } catch( ClassCastException e ) {
+            Log.d("GameTimer", "TabsPagerAdapter: SMSControlTimer Not Implement" + e.getMessage() );
+            throw new ClassCastException(fragment.toString() + "must implement SMSControlTimer");
+        }
+        mPagerAdapter.addFragment(fragment, getString(R.string.tab1_title));
+        mPagerAdapter.addFragment(new TimerSettingFragment(), getString(R.string.tab2_title));
+        mPagerAdapter.addFragment(new SettingFragment(), getString(R.string.tab3_title));
 
-        Tab tab1 = mActionBar
-                .newTab()
-                .setText(R.string.tab1_title)
-                .setIcon(R.drawable.tab1_ico)
-                .setTag(getString(R.string.tab1_tag))
-                .setTabListener(this);
-
-        mActionBar.addTab(tab1);
-
-        Tab tab2 = mActionBar
-                .newTab()
-                .setText(R.string.tab2_title)
-                .setIcon(R.drawable.tab2_ico)
-                .setTag(getString(R.string.tab2_tag))
-                .setTabListener(this);
-
-        mActionBar.addTab(tab2);
-
-        Tab tab3 = mActionBar
-                .newTab()
-                .setText(R.string.tab3_title)
-                .setIcon(R.drawable.tab3_ico)
-                .setTag(getString(R.string.tab3_tag))
-                .setTabListener(this);
-
-        mActionBar.addTab(tab3);
+        viewPager.setAdapter(mPagerAdapter);
     }
 
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
-
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(R.drawable.tab1_ico);
+        tabLayout.getTabAt(1).setIcon(R.drawable.tab2_ico);
+        tabLayout.getTabAt(2).setIcon(R.drawable.tab3_ico);
     }
 
     private void initTimerData() {
@@ -524,36 +490,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * ViewPager Adapter
      */
     public class TabsPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
         public TabsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int index) {
-            switch( index ) {
-                case 0:
-                    Fragment fragment = new MainTimerFragment();
-                    try {
-                        mSmsControlTimer = (SMSControlTimer) fragment;
-                    } catch( ClassCastException e ) {
-                        Log.d("GameTimer", "TabsPagerAdapter: SMSControlTimer Not Implement" + e.getMessage() );
-                        throw new ClassCastException(fragment.toString() + "must implement SMSControlTimer");
-                    }
-                    return fragment;
-
-                case 1:
-                    return new TimerSettingFragment();
-
-                case 2:
-                    return new SettingFragment();
-            }
-
-            return null;
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
         @Override
         public int getCount() {
-            return 3;               // Tab 개수
+            return mFragmentList.size();               // Tab 개수
         }
 
         @Override
@@ -569,6 +520,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 Log.d("GameTimer", "TabsPagerAdapter : " + ((SettingFragment)object).getTag());
                 return POSITION_UNCHANGED;
             }
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 
@@ -606,8 +567,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         private View mName2Layout;
         private View mName3Layout;
 
+        private CoordinatorLayout rootLayout;
+
+        @BindView(R.id.photo1)
         private ImageView mPhoto1;
+        @BindView(R.id.photo2)
         private ImageView mPhoto2;
+        @BindView(R.id.photo3)
         private ImageView mPhoto3;
 
         private TextView mName1;
@@ -629,10 +595,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public MainTimerFragment() {
         }
 
+        public void setCoordinatorLayout(CoordinatorLayout coordinatorLayout) {
+            this.rootLayout = coordinatorLayout;
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             Log.d("GameTimer", "MainTimerFragment onCreateView");
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            ButterKnife.bind(rootView);
 
             initView(rootView);
             initViewTimer();
@@ -654,10 +625,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             mName1Layout = rootView.findViewById(R.id.name1_layout);
             mName2Layout = rootView.findViewById(R.id.name1_layout);
             mName3Layout = rootView.findViewById(R.id.name1_layout);
-
-            mPhoto1 = (ImageView) rootView.findViewById(R.id.photo1);
-            mPhoto2 = (ImageView) rootView.findViewById(R.id.photo2);
-            mPhoto3 = (ImageView) rootView.findViewById(R.id.photo3);
 
             mName1 = (TextView) rootView.findViewById(R.id.name1);
             mName2 = (TextView) rootView.findViewById(R.id.name2);
@@ -754,6 +721,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch( v.getId() ) {
                 case R.id.start1:
                     toggleGameTimer(TIMER_INDEX[0]);
+                    Snackbar snackbar = Snackbar.make(getView(), "Start Timer 1", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                     break;
 
                 case R.id.start2:
@@ -827,7 +796,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             Message msg = handler.obtainMessage();
                             msg.what = index;
                             handler.sendMessage(msg);
-
                         }
                     };
                 }
