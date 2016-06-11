@@ -569,16 +569,13 @@ public class MainActivity extends AppCompatActivity {
 
         private CoordinatorLayout rootLayout;
 
-        @BindView(R.id.photo1)
-        private ImageView mPhoto1;
-        @BindView(R.id.photo2)
-        private ImageView mPhoto2;
-        @BindView(R.id.photo3)
-        private ImageView mPhoto3;
+        @BindView(R.id.photo1) ImageView mPhoto1;
+        @BindView(R.id.photo2) ImageView mPhoto2;
+        @BindView(R.id.photo3) ImageView mPhoto3;
 
-        private TextView mName1;
-        private TextView mName2;
-        private TextView mName3;
+        @BindView(R.id.name1) TextView mName1;
+        @BindView(R.id.name2) TextView mName2;
+        @BindView(R.id.name3) TextView mName3;
 
         private View mStart1Button;
         private View mStart2Button;
@@ -603,7 +600,7 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             Log.d("GameTimer", "MainTimerFragment onCreateView");
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            ButterKnife.bind(rootView);
+            ButterKnife.bind(this, rootView);
 
             initView(rootView);
             initViewTimer();
@@ -625,10 +622,6 @@ public class MainActivity extends AppCompatActivity {
             mName1Layout = rootView.findViewById(R.id.name1_layout);
             mName2Layout = rootView.findViewById(R.id.name1_layout);
             mName3Layout = rootView.findViewById(R.id.name1_layout);
-
-            mName1 = (TextView) rootView.findViewById(R.id.name1);
-            mName2 = (TextView) rootView.findViewById(R.id.name2);
-            mName3 = (TextView) rootView.findViewById(R.id.name3);
 
             mStart1Button = rootView.findViewById(R.id.start1);
             mStart2Button = rootView.findViewById(R.id.start2);
