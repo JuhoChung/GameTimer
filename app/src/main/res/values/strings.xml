@@ -22,8 +22,8 @@
     <string name="tab3_tag">SettingFragment</string>
 
     <string name="name_field">이름</string>
-    <string name="timer_field">사용가능 시간 : %s분</string>
-    <string name="remain_timer_filed">남은 시간 : %1$s분 %2$s초</string>
+    <string name="timer_field">사용가능 시간 : %d분</string>
+    <string name="remain_timer_filed">남은 시간 : %1$d분 %2$d초</string>
     <string name="timer_start">게임 시작</string>
     <string name="timer_stop">게임 멈춤</string>
 
@@ -36,7 +36,7 @@
 
     <string name="setting_timer_title">시간을 변경하세요(분)</string>
     <string name="setting_timer_spinner_title">변경할 시간을 선택하세요</string>
-    <string name="setting_timer_min_value_msg">최소 시간은 %s 입니다.</string>
+    <string name="setting_timer_min_value_msg">최소 시간은 %d 입니다.</string>
     <string name="setting_timer_save_msg">시간이 저장되었습니다</string>
 
     <string name="input_confirm">저장</string>
@@ -59,9 +59,13 @@
     <string name="delete_all_log_confirm_msg">모든 로그를 삭제하시겠습니까?</string>
     <string name="delete_all_log_msg">모든 로그가 삭제되었습니다</string>
 
-    <string name="notification_msg">[ %s ]분이 지났습니다.</string>
+    <string name="notification_msg">[ %d ]분이 지났습니다.</string>
 
     <string name="setting_photo_title">사진을 변경하세요</string>
     <string name="setting_photo_save_msg">사진이 저장되었습니다</string>
     <string name="log_data_empty_msg">해당 로그가 없습니다</string>
+
+    <string name="permission_group_sms">SMS</string>
+    <string name="permission_group_storage">저장</string>
+    <string name="permission_rational_gametimer">Game Timer를 사용하려면 SMS, 저장소 권한이 필요합니다.</string>
 </resources>

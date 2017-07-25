@@ -1,3 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/d51017629adcd8ed7f0bede342bdecd8702ab6ce/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_bd686724491d890a13c3f2fdae07220a6622f958.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/0ed20bba10e74ac7c056ce1c837fe04389bba4f8/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1e428fd053a558d5f8bc88b9380e7b77eae30f5e">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_6b6ae2724190245f67b8a8b8a1a87135992be850.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/Desktop/eclipse/sdk/extras/android/m2repository/com/android/support/support-annotations/24.1.0/support-annotations-24.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8a23146e1a8c7cb4758e3d3f62449213f1e51f67">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/support-annotations-24.1.0_b59e8b0f078f72084c7bc77f0e33ddcaf00fe052.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/44576a303a3f91a4eef2782bdb24eef398bc73cb/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4477ea44f5ec5ad064022a22691732d7638ff197">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_1c040a88f85f01eb6bde9f40722c903fa4895d0c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/0aaec15a23bb0fcd165d1e0f2fcccc4bf63cc9d4/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_f504d1be49d42d509048a6d4572d4a22552ad6ee.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.4.0/ea392375cf9ff59234a82e7928a204215ccc98cd/butterknife-annotations-8.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ea392375cf9ff59234a82e7928a204215ccc98cd">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/butterknife-annotations-8.4.0_e5455b06cf5d375cd0136443ddf71d6f69fc6d59.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/b60d9f0885a34cc30dcb232d7c99de990cc71275/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a07818a1ecabdb149998823429cce555af4b9cba">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_3095ed26ca2a5ca635778fdbba712b9e1beba281.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/ac8772d35b23faf93545ec32bfc04eb82a6d1ebd/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_2be82da8ff90019c779b71453d388eea7821c784.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/3ca4215bad5b9130e6ac4c56f72819bc0354227b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_aa02b9047b35a11fbc1193fe69799eb257c085aa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/fe4bd66460e70f2db78f440ddce273b5be6141c4/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_89954eeaf9243336bb25c0e389d78b8a15ea3da6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/fe4bd66460e70f2db78f440ddce273b5be6141c4/output/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0_1363cad74d3b17040542566e998aa8733684c581.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/a48a85cf521edf3e1782a0c2e17c82f1f172ee96/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_e63fe2c2af24b49eddb8907fb8e44ed55c26eee1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/uricul/.android/build-cache/402f6052db07b892a5a7fa758985c077824a55aa/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="/Users/uricul/git/GameTimer/app/build/intermediates/pre-dexed/debug/classes_da428c3c5395ff3c554d61506a2ea7ebd14b5a48.jar" />
+    </item>
+
+</items>

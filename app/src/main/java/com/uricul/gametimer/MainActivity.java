@@ -1,4 +1,4 @@
-package com.example.gametimer.app;
+package com.uricul.gametimer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,19 +25,16 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.util.LruCache;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -86,7 +83,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PermissionUtils.PermissionCallbacks {
     // Preference Key
     private static final String[] PREFERENCE_KEY_NAME = { "timer1_name", "timer2_name", "timer3_name" };
     private static final String[] PREFERENCE_KEY_TIMER_TIMEOUT = { "timer1_timeout", "timer2_timeout", "timer3_timeout" };
@@ -118,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int MIN_TIMER = 30;        // 30분이 최소값
 
     private static final int NOTIFICATION_TIMER_PERIOD = 0;
+
+    private static final int REQUEST_CODE_PERMISSION = 100;
 
     private static final String simpleDateFormat = "yyyy.MM.dd";
     private static final String detailDateFormat = "HH:mm:ss";
@@ -167,6 +166,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mContext = this;
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.container);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (!PermissionUtils.hasMustHavePermissions(mContext)) {
+            PermissionUtils.requestPermissions(this, R.string.permission_rational_gametimer, REQUEST_CODE_PERMISSION, PermissionUtils.MUST_HAVE_PERMISSIONS);
+        } else {
+            init();
+        }
+    }
+
+    private void init() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -198,12 +211,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.container);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mViewPager = (ViewPager) findViewById(R.id.main_pager);
         setupViewPager(mViewPager);
@@ -285,6 +292,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Toast.makeText(this, getString(R.string.back_press_ignore_msg), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode) {
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+            init();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> deniedPermissions, boolean isPermanentlyDenied) {
+        if (isPermanentlyDenied) {
+            PermissionUtils.requestPermissions(this, R.string.permission_rational_gametimer, REQUEST_CODE_PERMISSION, PermissionUtils.MUST_HAVE_PERMISSIONS);
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {

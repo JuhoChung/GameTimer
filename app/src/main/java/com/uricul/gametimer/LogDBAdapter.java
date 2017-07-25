@@ -1,4 +1,4 @@
-package com.example.gametimer.app;
+package com.uricul.gametimer;
 
 import android.content.ContentValues;
 import android.content.Context;
